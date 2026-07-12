@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+:root {
+  --background: #060608;
+  --surface: #0e0e13;
+  --surface-2: #16161d;
+  --border: #24242e;
+  --foreground: #f4f4f6;
+  --muted: #a1a1ac;
+  --muted-dim: #71717f;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-dim: var(--muted-dim);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* The signature multi-app spectrum, reused for text and accents. */
+.text-spectrum {
+  background: linear-gradient(
+    100deg,
+    #22d3ee 0%,
+    #818cf8 28%,
+    #d946ef 52%,
+    #fb7185 74%,
+    #2dd4bf 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-spectrum {
+  background: linear-gradient(
+    100deg,
+    #22d3ee 0%,
+    #818cf8 28%,
+    #d946ef 52%,
+    #fb7185 74%,
+    #2dd4bf 100%
+  );
+}
+
+/* Soft colored glows behind the hero. Painted as static radial gradients
+   (no `filter: blur`, which recomposites expensively on every scroll frame). */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(
+      40rem 34rem at 15% -8%,
+      rgba(99, 102, 241, 0.35) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      38rem 32rem at 88% -6%,
+      rgba(217, 70, 239, 0.28) 0%,
+      transparent 60%
+    );
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    animation: reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Card hover lift for app phone shots. */
+.shot {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease;
+}
+.shot:hover {
+  transform: translateY(-6px);
+}
+
+::selection {
+  background: #6366f1;
+  color: #fff;
+}
