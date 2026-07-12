@@ -1,0 +1,18 @@
+# AI Photo Journey
+
+> AI Photo Journey builds a family of five AI creativity apps for iPhone and iPad. Each app does one thing exceptionally well — enhancing, generating, animating, face-swapping — with no accounts, no skill required, and results in seconds. All apps are free to try on the App Store with optional PRO subscriptions.
+
+## The apps
+
+- [FxAI](https://ai-photo-journey.com/apps/fxai): All-in-one AI photo enhancer — retouch, restore, edit, erase. Site: https://fxai.app
+- [Photix](https://ai-photo-journey.com/apps/photix): AI image generation, conversational photo editing, and themed avatars. Site: https://photix.app
+- [Videx](https://ai-photo-journey.com/apps/videx): AI text-to-video and photo-to-video generator with ten styles. Site: https://videx.app
+- [SwapTo](https://ai-photo-journey.com/apps/swapto): AI face swap into 310 curated scenes, avatars, and glam filters. Site: https://swapto.app
+- [PicAlive](https://ai-photo-journey.com/apps/picalive): One-tap photo-to-video animation that brings still photos to life. Site: https://picalive.app
+
+## Company pages
+
+- [Home](https://ai-photo-journey.com/): The whole family at a glance
+- [About](https://ai-photo-journey.com/about): Who we are and what we believe
+- [Contact](https://ai-photo-journey.com/contact): General inquiries and per-app support
+- [Privacy](https://ai-photo-journey.com/privacy): Privacy overview and per-app policies

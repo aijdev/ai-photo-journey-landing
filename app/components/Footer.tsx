@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Logo } from "./Logo";
 import { APPS, SITE_NAME, SUPPORT_EMAIL } from "../lib/site";
 
@@ -44,19 +45,43 @@ export function Footer() {
             </h3>
             <ul className="mt-4 space-y-2.5 text-sm">
               <li>
-                <a
+                <Link
                   href="/#apps"
                   className="text-muted transition-colors hover:text-foreground"
                 >
                   All apps
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/about"
+                  className="text-muted transition-colors hover:text-foreground"
+                >
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/contact"
+                  className="text-muted transition-colors hover:text-foreground"
+                >
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/privacy"
+                  className="text-muted transition-colors hover:text-foreground"
+                >
+                  Privacy
+                </Link>
               </li>
               <li>
                 <a
                   href={`mailto:${SUPPORT_EMAIL}`}
                   className="text-muted transition-colors hover:text-foreground"
                 >
-                  Contact
+                  {SUPPORT_EMAIL}
                 </a>
               </li>
             </ul>

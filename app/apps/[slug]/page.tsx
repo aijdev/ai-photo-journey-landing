@@ -66,6 +66,43 @@ function AppStoreIcon() {
   );
 }
 
+/**
+ * Deep links into each app's own marketing site. Linking to inner pages (not
+ * just the homepage) passes hub authority to the pages that rank and convert.
+ */
+const DEEP_LINKS: Record<string, { label: string; path: string }[]> = {
+  fxai: [
+    { label: "All features", path: "/features" },
+    { label: "Photo Restore", path: "/features/restore" },
+    { label: "Restoration guide", path: "/restoration-guide" },
+    { label: "FAQ", path: "/faq" },
+  ],
+  photix: [
+    { label: "All features", path: "/features" },
+    { label: "AI Image Generator", path: "/features/ai-image-generator" },
+    { label: "Avatar ideas", path: "/avatar-ideas" },
+    { label: "FAQ", path: "/faq" },
+  ],
+  videx: [
+    { label: "All features", path: "/features" },
+    { label: "AI Video Generator", path: "/features/ai-video-generator" },
+    { label: "Video ideas", path: "/video-ideas" },
+    { label: "FAQ", path: "/faq" },
+  ],
+  swapto: [
+    { label: "All features", path: "/features" },
+    { label: "AI Face Swap", path: "/features/ai-face-swap" },
+    { label: "Face swap ideas", path: "/face-swap-ideas" },
+    { label: "FAQ", path: "/faq" },
+  ],
+  picalive: [
+    { label: "All features", path: "/features" },
+    { label: "How it works", path: "/how-it-works" },
+    { label: "Animation ideas", path: "/animation-ideas" },
+    { label: "FAQ", path: "/faq" },
+  ],
+};
+
 export default async function AppPage({
   params,
 }: {
@@ -287,6 +324,33 @@ export default async function AppPage({
                     {f.a}
                   </p>
                 </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Deep links into the app's own site */}
+        <section className="border-t border-border/60 py-16">
+          <div className="mx-auto max-w-6xl px-5 sm:px-8">
+            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Explore {app.name} in depth
+            </h2>
+            <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-muted">
+              The full story lives on {domainLabel} — feature deep-dives,
+              guides, and answers to every question.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              {(DEEP_LINKS[app.slug] ?? []).map((link) => (
+                <a
+                  key={link.path}
+                  href={`${app.domain}${link.path}`}
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-surface-2"
+                >
+                  {link.label}
+                  <ArrowIcon />
+                </a>
               ))}
             </div>
           </div>

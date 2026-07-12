@@ -22,6 +22,9 @@ export function Header() {
               {a.name}
             </Link>
           ))}
+          <Link href="/about" className="transition-colors hover:text-foreground">
+            About
+          </Link>
         </nav>
         <Link
           href="/#apps"
