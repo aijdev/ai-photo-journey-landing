@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { Breadcrumbs } from "../components/Breadcrumbs";
-import { APPS, SITE_NAME, SITE_URL, SUPPORT_EMAIL } from "../lib/site";
+import { APP_SKELETON as APPS, SITE_NAME, SITE_URL, SUPPORT_EMAIL } from "../lib/site";
 
 export const metadata: Metadata = {
   title: "Privacy",

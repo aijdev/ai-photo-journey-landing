@@ -1,17 +1,16 @@
 /**
  * Structured data (JSON-LD) for rich results in search engines.
  * Site-wide schema is emitted in the root layout; per-app schema is emitted on
- * each `/apps/[slug]` detail page.
+ * each `/apps/[slug]` detail page (and its localized `/[lang]/apps/[slug]`).
  */
+import { APP_SKELETON, RATING, SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "./site";
+import { getApps, type AppInfo, type Faq } from "./content";
 import {
-  APPS,
-  RATING,
-  SITE_DESCRIPTION,
-  SITE_NAME,
-  SITE_URL,
-  type AppInfo,
-} from "./site";
-import type { Faq } from "./appContent";
+  type Locale,
+  defaultLocale,
+  hreflangMap,
+  localizedUrl,
+} from "../i18n/config";
 
 export function organizationSchema() {
   return {
@@ -21,27 +20,29 @@ export function organizationSchema() {
     url: SITE_URL,
     logo: `${SITE_URL}/icon.svg`,
     description: SITE_DESCRIPTION,
-    sameAs: APPS.map((a) => a.domain),
+    sameAs: APP_SKELETON.map((a) => a.domain),
   };
 }
 
-export function websiteSchema() {
+export function websiteSchema(locale: Locale = defaultLocale) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
     url: SITE_URL,
     description: SITE_DESCRIPTION,
+    inLanguage: hreflangMap[locale],
   };
 }
 
 /** An ItemList of every app, each modeled as a SoftwareApplication. */
-export function appsListSchema() {
+export function appsListSchema(locale: Locale = defaultLocale) {
+  const apps = getApps(locale);
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: `${SITE_NAME} apps`,
-    itemListElement: APPS.map((app, i) => ({
+    itemListElement: apps.map((app, i) => ({
       "@type": "ListItem",
       position: i + 1,
       item: {
@@ -66,7 +67,11 @@ export function appsListSchema() {
 }
 
 /** A single app modeled as a SoftwareApplication, for its detail page. */
-export function appSchema(app: AppInfo, description: string) {
+export function appSchema(
+  app: AppInfo,
+  description: string,
+  locale: Locale = defaultLocale,
+) {
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -74,7 +79,8 @@ export function appSchema(app: AppInfo, description: string) {
     applicationCategory: "MultimediaApplication",
     operatingSystem: "iOS",
     description,
-    url: `${SITE_URL}/apps/${app.slug}`,
+    inLanguage: hreflangMap[locale],
+    url: localizedUrl(`/apps/${app.slug}`, locale),
     sameAs: app.domain,
     downloadUrl: app.appStore,
     screenshot: app.shots.map((s) => `${SITE_URL}${s}`),
@@ -90,17 +96,17 @@ export function appSchema(app: AppInfo, description: string) {
 }
 
 /** Breadcrumb trail: Home › app name. */
-export function breadcrumbSchema(app: AppInfo) {
+export function breadcrumbSchema(app: AppInfo, locale: Locale = defaultLocale) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 1, name: "Home", item: localizedUrl("/", locale) },
       {
         "@type": "ListItem",
         position: 2,
         name: app.name,
-        item: `${SITE_URL}/apps/${app.slug}`,
+        item: localizedUrl(`/apps/${app.slug}`, locale),
       },
     ],
   };

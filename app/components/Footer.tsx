@@ -1,9 +1,16 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
-import { APPS, SITE_NAME, SUPPORT_EMAIL } from "../lib/site";
+import { SITE_NAME, SUPPORT_EMAIL } from "../lib/site";
+import { getApps } from "../lib/content";
+import { type Locale, defaultLocale, localizedPath } from "../i18n/config";
+import { getDictionary } from "../i18n/getDictionary";
 
-export function Footer() {
+export function Footer({ locale = defaultLocale }: { locale?: Locale }) {
   const year = new Date().getFullYear();
+  const apps = getApps(locale);
+  const t = getDictionary(locale).common;
+  const footer = t.footer;
+
   return (
     <footer className="border-t border-border/60 bg-surface/40">
       <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
@@ -11,17 +18,16 @@ export function Footer() {
           <div className="max-w-xs">
             <Logo />
             <p className="mt-4 text-sm leading-relaxed text-muted">
-              A family of AI creativity apps that turn photos and ideas into
-              something extraordinary — built for iPhone and iPad.
+              {footer.tagline}
             </p>
           </div>
 
           <div>
             <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-dim">
-              Our apps
+              {footer.ourAppsTitle}
             </h3>
             <ul className="mt-4 grid grid-cols-2 gap-x-10 gap-y-2.5 text-sm">
-              {APPS.map((a) => (
+              {apps.map((a) => (
                 <li key={a.slug}>
                   <a
                     href={a.domain}
@@ -41,39 +47,40 @@ export function Footer() {
 
           <div>
             <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-dim">
-              Company
+              {footer.companyTitle}
             </h3>
             <ul className="mt-4 space-y-2.5 text-sm">
               <li>
                 <Link
-                  href="/#apps"
+                  href={`${localizedPath("/", locale)}#apps`}
                   className="text-muted transition-colors hover:text-foreground"
                 >
-                  All apps
+                  {footer.allApps}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/about"
+                  href={localizedPath("/about", locale)}
                   className="text-muted transition-colors hover:text-foreground"
                 >
-                  About
+                  {footer.about}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href={localizedPath("/contact", locale)}
                   className="text-muted transition-colors hover:text-foreground"
                 >
-                  Contact
+                  {footer.contact}
                 </Link>
               </li>
               <li>
+                {/* Privacy is English-only legal content; never locale-prefixed. */}
                 <Link
                   href="/privacy"
                   className="text-muted transition-colors hover:text-foreground"
                 >
-                  Privacy
+                  {footer.privacy}
                 </Link>
               </li>
               <li>
@@ -90,9 +97,9 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col gap-2 border-t border-border/60 pt-6 text-xs text-muted-dim sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {year} {SITE_NAME}. All rights reserved.
+            © {year} {SITE_NAME}. {footer.rights}
           </p>
-          <p>Made for iPhone &amp; iPad.</p>
+          <p>{footer.madeFor}</p>
         </div>
       </div>
     </footer>

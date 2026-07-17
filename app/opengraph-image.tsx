@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { APPS, SITE_NAME, SITE_TAGLINE } from "./lib/site";
+import { APP_SKELETON as APPS, SITE_NAME, SITE_TAGLINE } from "./lib/site";
 
 export const dynamic = "force-static";
 export const alt = `${SITE_NAME} — ${SITE_TAGLINE}`;

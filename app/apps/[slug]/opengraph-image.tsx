@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
-import { APPS, SITE_NAME } from "../../lib/site";
-import { APP_CONTENT } from "../../lib/appContent";
+import { APP_SKELETON as APPS, SITE_NAME } from "../../lib/site";
+import { getAppContent } from "../../lib/content";
 
 export const dynamic = "force-static";
 export const size = { width: 1200, height: 630 };
@@ -12,6 +12,9 @@ export function generateStaticParams() {
 
 export const alt = "App overview";
 
+// OG images are generated once at build time from the English copy, regardless
+// of which locale links to this route — social-preview cards are not
+// per-locale in this v1.
 export default async function OgImage({
   params,
 }: {
@@ -19,7 +22,7 @@ export default async function OgImage({
 }) {
   const { slug } = await params;
   const app = APPS.find((a) => a.slug === slug);
-  const content = APP_CONTENT[slug];
+  const content = getAppContent("en")[slug];
   const headline = content?.ogHeadline ?? "";
   const gradient = app
     ? `linear-gradient(135deg, ${app.accent}, ${app.accentTo})`

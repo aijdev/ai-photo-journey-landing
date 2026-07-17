@@ -1,5 +1,7 @@
 import Link from "next/link";
-import type { AppInfo } from "../lib/site";
+import type { AppInfo } from "../lib/content";
+import { type Locale, defaultLocale, localizedPath } from "../i18n/config";
+import { getDictionary } from "../i18n/getDictionary";
 
 function CheckIcon({ color }: { color: string }) {
   return (
@@ -45,10 +47,19 @@ function ArrowIcon() {
   );
 }
 
-export function AppSection({ app, index }: { app: AppInfo; index: number }) {
+export function AppSection({
+  app,
+  index,
+  locale = defaultLocale,
+}: {
+  app: AppInfo;
+  index: number;
+  locale?: Locale;
+}) {
   const reversed = index % 2 === 1;
   const gradient = `linear-gradient(135deg, ${app.accent}, ${app.accentTo})`;
   const domainLabel = app.domain.replace(/^https?:\/\//, "");
+  const t = getDictionary(locale).common;
 
   return (
     <section
@@ -113,7 +124,7 @@ export function AppSection({ app, index }: { app: AppInfo; index: number }) {
                 className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-transform hover:scale-[1.03]"
                 style={{ backgroundImage: gradient }}
               >
-                Visit {domainLabel}
+                {t.visitCta.replace("{domain}", domainLabel)}
                 <ArrowIcon />
               </a>
               <a
@@ -123,14 +134,14 @@ export function AppSection({ app, index }: { app: AppInfo; index: number }) {
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-medium text-foreground transition-colors hover:bg-surface-2"
               >
                 <AppStoreIcon />
-                App Store
+                {t.appStoreLabel}
               </a>
               <Link
-                href={`/apps/${app.slug}`}
+                href={localizedPath(`/apps/${app.slug}`, locale)}
                 className="inline-flex items-center gap-1.5 px-2 py-2.5 text-sm font-medium transition-colors hover:opacity-80"
                 style={{ color: app.accent }}
               >
-                Learn more
+                {t.learnMore}
                 <ArrowIcon />
               </Link>
             </div>
